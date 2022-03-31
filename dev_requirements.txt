@@ -1,0 +1,7 @@
+isort
+black
+pycodestyle
+pydocstyle
+pylint
+pytest
+pytest-mock
