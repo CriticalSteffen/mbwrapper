@@ -29,5 +29,10 @@ def get_info(sample_hash: str = None) -> dict:
                 "hash": sample_hash,
             },
         )
-        return json.loads(response.content)
+        json_response = json.loads(response.content)
+        parsed_response = {
+            "query_status": json_response["query_status"],
+        }
+        parsed_response.update(json_response["data"][0])
+        return parsed_response
     return {}

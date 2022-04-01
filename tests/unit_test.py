@@ -12,12 +12,17 @@ import mbwrapper as mb
 def test_get_info(mock_post) -> None:
     """Test the mb.get_info function."""
     test_hash = "0123456789ABCDEF0123456789ABCDEF"
-    expected_response = {
+    api_response = {
         "query_status": "ok",
         "data": [{"md5_hash": test_hash, "signature": "RevengeRAT"}],
     }
+    expected_response = {
+        "query_status": "ok",
+        "md5_hash": test_hash,
+        "signature": "RevengeRAT",
+    }
     response = requests.Response()
-    response._content = json.dumps(expected_response).encode("utf-8")
+    response._content = json.dumps(api_response).encode("utf-8")
     response.status_code = 200
     mock_post.return_value = response
     actual_response = mb.get_info(sample_hash=test_hash)

@@ -9,7 +9,7 @@ A Python3 wrapper for the MalwareBazaar API.
 >>> info = mw.get_info("7338b335ad5471cb67658f27836374f0") # Accepts SHA256, MD5 or SHA1 hashes.
 >>> info["query_status"]
 'ok'
->>> sha256 = info["data"][0]["sha256_hash"]
+>>> sha256 = info["sha256_hash"]
 >>> sha256
 'e167b20f1acf48f7ce0ae33a218e2c1b300b41c012ededf03e7a3522a4ebe95e'
 >>> zipfile = mw.get_file(sha256) # Accepts only SHA256 values.
