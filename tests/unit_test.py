@@ -12,6 +12,7 @@ import mbwrapper as mb
 def test_get_info(mock_post) -> None:
     """Test the mb.get_info function."""
     test_hash = "0123456789ABCDEF0123456789ABCDEF"
+    # First test with a valid hash.
     api_response = {
         "query_status": "ok",
         "data": [{"md5_hash": test_hash, "signature": "RevengeRAT"}],
@@ -34,6 +35,16 @@ def test_get_info(mock_post) -> None:
         },
     )
     assert actual_response == expected_response
+    # Next test error statuses.
+    for status in ["illegal_hash", "hash_not_found", "no_hash_provided"]:
+        api_response = {
+            "query_status": status,
+        }
+        expected_response = api_response
+        response._content = json.dumps(api_response).encode("utf-8")
+        mock_post.return_value = response
+        actual_response = mb.get_info(sample_hash=test_hash)
+        assert actual_response == expected_response
 
 
 @mock.patch("mbwrapper.requests.post", create=True)

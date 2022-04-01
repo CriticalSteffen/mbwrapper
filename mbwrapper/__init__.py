@@ -33,6 +33,9 @@ def get_info(sample_hash: str = None) -> dict:
         parsed_response = {
             "query_status": json_response["query_status"],
         }
-        parsed_response.update(json_response["data"][0])
+        try:
+            parsed_response.update(json_response["data"][0])
+        except KeyError:
+            pass
         return parsed_response
-    return {}
+    return {"query_status": "no_hash_provided"}

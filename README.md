@@ -32,6 +32,17 @@ b'MZ\x90\x00\x03\x00\x00\x00\x04\x00\x00\x00\xff\xff\x00\x00'
 >>> # Now the `unzipped` byte string contains the decompressed malware sample.
 ```
 
+The `get_info` function attempts to handle errors gracefully, passing error messages in the `query_status` field as outlined in the [API documentation](https://bazaar.abuse.ch/api/#query_hash):
+
+```python
+>>> mw.get_info("00000000000000000000000000000000")
+{'query_status': 'hash_not_found'}
+>>> mw.get_info("NOT_A_HASH")
+{'query_status': 'illegal_hash'}
+>>> mw.get_info()
+{'query_status': 'no_hash_provided'}
+```
+
 ## Developers
 
 To work on `mbwrapper`, you'll need to install the dev requirements:
